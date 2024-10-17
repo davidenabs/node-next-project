@@ -1,4 +1,4 @@
-import cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 import { create } from "zustand";
 
 interface UserState {
@@ -17,19 +17,19 @@ export const useUserStore = create<UserState>((set) => ({
     user: null,
     loading: false,
     error: null,
-    isAuthenticated: cookies.get('isAuthenticated') || false,
+    isAuthenticated: Cookies.get('isAuthenticated') ? true : false,
     setIsAuthenticated: (isAuthenticated) => {
         set({ isAuthenticated });
-        cookies.set('isAuthenticated', JSON.stringify(isAuthenticated));
+        Cookies.set('isAuthenticated', JSON.stringify(isAuthenticated));
     },
     setUser: (user) => {
         set({ user });
-        cookies.set('user', JSON.stringify(user));
+        Cookies.set('user', JSON.stringify(user));
     },
     logout: () => {
         set({ user: null, isAuthenticated: false, error: null });
-        cookies.remove('user');
-        cookies.remove('isAuthenticated');
+        Cookies.remove('user');
+        Cookies.remove('isAuthenticated');
     },
     setLoading: (loading) => set({ loading }),
     setError: (error) => set({ error }),
