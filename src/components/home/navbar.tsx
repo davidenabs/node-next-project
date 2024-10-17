@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { CloseButton } from "@headlessui/react";
 import { useAppStore } from "@/stores/app";
 import cn from "@/utils/class_names";
-import { Bars3Icon } from "@heroicons/react/16/solid";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/16/solid";
 import { Badge } from "rizzui";
 import AppLogo from "../logo";
 import { useCartStore } from "@/stores/cart";
@@ -87,7 +87,7 @@ const Navbar: React.FC = () => {
                             className="lg:hidden flex items-center text-white"
                         >
                             {isMenuOpen ? (
-                                <CloseButton className="h-4 w-4" />
+                                <XMarkIcon className="h-6 w-6 fill-black" />
                             ) : (<Bars3Icon className="h-6 w-6 fill-black" />)}
                         </button>
                     ) : (
@@ -99,30 +99,38 @@ const Navbar: React.FC = () => {
                         </nav>
                     )}
 
-                    {width >= 1024 && isAuthenticated ? <Link href={'#'} onClick={handleLogout} className={cn("text-green-700 ")}>
-                        {'Logout'}
-                    </Link> : (
-                        <div className="flex items-center gap-2 font-bold">
-                            <Link href={'/login'} className={cn("text-tertiary-700")}>
-                                {'Login'}
+                    {width >= 1024 && (
+                        isAuthenticated ? (
+                            <Link href={'#'} onClick={handleLogout} className={cn("text-green-700")}>
+                                {'Logout'}
                             </Link>
-
-                            <Link href={'/register'} className={cn("text-green-700 ")}>
-                                {'Register'}
-                            </Link>
-                        </div>
+                        ) : (
+                            <div className="flex items-center gap-2 font-bold">
+                                <Link href={'/login'} className={cn("text-tertiary-700")}>
+                                    {'Login'}
+                                </Link>
+                                <Link href={'/register'} className={cn("text-green-700")}>
+                                    {'Register'}
+                                </Link>
+                            </div>
+                        )
                     )}
+
                 </div>
 
                 {isMenuOpen && width < 1024 && (
-                    <nav className="absolute top-[90px] left-0 w-full bg-primary-100 text-zinc-700 z-[998]">
+                    <nav className="absolute top-[90px] left-0 w-full bg-primary-100 text-zinc-700 z-[998] bg-white shadow-xl">
                         <ul className="flex flex-col items-center gap-5 py-4">
                             {navItems.map((item, index) => (
                                 <li key={index} onClick={() => setIsMenuOpen(false)}>
                                     <NavItem {...item} />
                                 </li>
                             ))}
-                            {isAuthenticated && <li className="flex items-center gap-2 font-bold ">
+                            {isAuthenticated ? (
+                                <Link href={'#'} onClick={handleLogout} className={cn("text-green-700")}>
+                                    {'Logout'}
+                                </Link>
+                            ) : (<li className="flex items-center gap-2 font-bold border-t">
                                 <Link href={'/login'} className={cn("text-tertiary-700")}>
                                     {'Login'}
                                 </Link>
@@ -130,7 +138,7 @@ const Navbar: React.FC = () => {
                                 <Link href={'/register'} className={cn("text-green-700 ")}>
                                     {'Register'}
                                 </Link>
-                            </li>}
+                            </li>)}
                         </ul>
                     </nav>
                 )}

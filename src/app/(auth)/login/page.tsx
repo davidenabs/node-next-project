@@ -74,10 +74,8 @@ const LoginPage: React.FC = () => {
           value={formik.values.email}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
+          error={formik.errors.email}
         />
-        {formik.touched.email && formik.errors.email ? (
-          <div className="text-red-600 text-sm">{formik.errors.email}</div>
-        ) : null}
 
         <label htmlFor="password" className="sr-only">Password</label>
         <Password
@@ -87,10 +85,8 @@ const LoginPage: React.FC = () => {
           value={formik.values.password}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
+          error={formik.errors.password}
         />
-        {formik.touched.password && formik.errors.password ? (
-          <div className="text-red-600 text-sm">{formik.errors.password}</div>
-        ) : null}
 
         <Button
           type="submit"
